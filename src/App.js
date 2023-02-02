@@ -11,7 +11,6 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import axios from "axios";
-import Noti from "./Components/toasts";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -19,7 +18,6 @@ function App() {
   const { transcript, resetTranscript } = useSpeechRecognition({
     continuous: true,
   });
-
   const [hindi, setHindi] = useState("");
   const [english, setEnglish] = useState("");
 
@@ -29,24 +27,32 @@ function App() {
   console.log(hindi);
 
   const translate = () => {
-    const params = new URLSearchParams();
-    params.append("q", transcript);
-    params.append("source", "en");
-    params.append("target", "hi");
-    params.append("api-key", "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
-    params.append("mode", "no-cors");
+    // const params = new URLSearchParams();
+    // params.append("q", transcript);
+    // params.append("source", "en");
+    // params.append("target", "hi");
+    // params.append("api-key", "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
+    // params.append("mode", "no-cors");
     if (transcript !== "") {
+      // axios
+      //   .post("https://libretranslate.de/translate", params, {
+      //     headers: {
+      //       Accept: "application/json",
+      //       "Content-Type": "application/x-www-form-urlencoded",
+      //       "Access-Control-Allow-Origin": "*",
+      //     },
+      //   })
+      //   .then((res) => {
+      //     console.log(res.data.translatedText);
+      //     setHindi(res.data.translatedText);
+      //   });
+      let url = `https://api.mymemory.translated.net/get?q=${transcript}&langpair=${"en"}|${"hi"}`;
       axios
-        .post("https://libretranslate.de/translate", params, {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/x-www-form-urlencoded",
-            "Access-Control-Allow-Origin": "*",
-          },
-        })
-        .then((res) => {
-          console.log(res.data.translatedText);
-          setHindi(res.data.translatedText);
+        .post(url)
+        // .then((res) => res.json())
+        .then((data) => {
+          console.log(data.data.responseData.translatedText);
+          setHindi(data.data.responseData.translatedText);
         });
     } else {
       console.log("Say Something");
