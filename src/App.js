@@ -26,8 +26,8 @@ function App() {
   }, [transcript]);
 
   const translate = () => {
-    setHindi("Translating.......");
     if (transcript !== "") {
+      setHindi("Translating.......");
       let url = `https://api.mymemory.translated.net/get?q=${transcript}&langpair=${"en"}|${"hi"}`;
       axios.post(url).then((data) => {
         setHindi(data.data.responseData.translatedText);
