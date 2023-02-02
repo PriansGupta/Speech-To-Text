@@ -34,14 +34,14 @@ function App() {
     params.append("source", "en");
     params.append("target", "hi");
     params.append("api-key", "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
-    params.append("mode", "no-cors");
+    // params.append("mode", "no-cors");
     if (transcript !== "") {
       axios
         .post("https://libretranslate.de/translate", params, {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/x-www-form-urlencoded",
-            "Access-Control-Allow-Origin": "*",
+            // "Access-Control-Allow-Origin": "*",
           },
         })
         .then((res) => {
