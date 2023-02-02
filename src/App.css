@@ -68,6 +68,6 @@
   border: 1px solid rgb(134, 133, 133);
   border-radius: 10px;
   display: flex;
-  font-family: "Itim rev=2";
+  font-family: monospace;
   padding: 20px;
 }
