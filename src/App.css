@@ -37,8 +37,10 @@
   }
 }
 .Header {
-  font-family: "lato", sans-serif;
+  font-family: fantasy;
   font-size: 60px;
+  letter-spacing: 3px;
+  color: white;
 }
 
 .container,

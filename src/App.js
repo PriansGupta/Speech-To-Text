@@ -12,6 +12,7 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
+import { MicCircleOutline } from "react-ionicons";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
@@ -20,13 +21,22 @@ function App() {
   });
   const [hindi, setHindi] = useState("");
   const [english, setEnglish] = useState("");
-
+  const [record, setRecord] = useState(false);
   useEffect(() => {
     setEnglish(transcript);
   }, [transcript]);
 
+  const Recording = () => {
+    SpeechRecognition.startListening();
+    setRecord(true);
+  };
+  const Stop = () => {
+    SpeechRecognition.stopListening();
+    setRecord(false);
+  };
   const translate = () => {
     if (transcript !== "") {
+      setRecord(false);
       setHindi("Translating.......");
       let url = `https://api.mymemory.translated.net/get?q=${transcript}&langpair=${"en"}|${"hi"}`;
       axios.post(url).then((data) => {
@@ -43,6 +53,7 @@ function App() {
     setHindi("");
     setEnglish("");
     resetTranscript();
+    setRecord(false);
   };
 
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
@@ -79,17 +90,20 @@ function App() {
             </Container>
             <Card.Body>
               <ButtonGroup className="me-2" aria-label="First group">
-                <Button
-                  variant="outline-success"
-                  onClick={SpeechRecognition.startListening}
-                >
-                  Start Recording
+                <Button variant="outline-success" onClick={Recording}>
+                  {record && (
+                    <MicCircleOutline
+                      color={"red"}
+                      // title={}
+                      height="20px"
+                      width="20px"
+                      beat
+                    />
+                  )}
+                  Start Listening
                 </Button>{" "}
-                <Button
-                  variant="outline-danger"
-                  onClick={SpeechRecognition.stopListening}
-                >
-                  Stop Recording
+                <Button variant="outline-danger" onClick={Stop}>
+                  Stop Listening
                 </Button>{" "}
                 <Button variant="outline-warning" onClick={Reset}>
                   Reset
