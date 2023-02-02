@@ -24,38 +24,15 @@ function App() {
   useEffect(() => {
     setEnglish(transcript);
   }, [transcript]);
-  console.log(hindi);
 
   const translate = () => {
-    // const params = new URLSearchParams();
-    // params.append("q", transcript);
-    // params.append("source", "en");
-    // params.append("target", "hi");
-    // params.append("api-key", "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
-    // params.append("mode", "no-cors");
+    setHindi("Translating.......");
     if (transcript !== "") {
-      // axios
-      //   .post("https://libretranslate.de/translate", params, {
-      //     headers: {
-      //       Accept: "application/json",
-      //       "Content-Type": "application/x-www-form-urlencoded",
-      //       "Access-Control-Allow-Origin": "*",
-      //     },
-      //   })
-      //   .then((res) => {
-      //     console.log(res.data.translatedText);
-      //     setHindi(res.data.translatedText);
-      //   });
       let url = `https://api.mymemory.translated.net/get?q=${transcript}&langpair=${"en"}|${"hi"}`;
-      axios
-        .post(url)
-        // .then((res) => res.json())
-        .then((data) => {
-          console.log(data.data.responseData.translatedText);
-          setHindi(data.data.responseData.translatedText);
-        });
+      axios.post(url).then((data) => {
+        setHindi(data.data.responseData.translatedText);
+      });
     } else {
-      console.log("Say Something");
       toast.error("Say Something!", {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
