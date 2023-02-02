@@ -37,7 +37,7 @@ function App() {
     params.append("mode", "no-cors");
     if (transcript !== "") {
       axios
-        .post("http://libretranslate.de/translate", params, {
+        .post("https://libretranslate.de/translate", params, {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/x-www-form-urlencoded",
